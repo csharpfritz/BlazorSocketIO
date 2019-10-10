@@ -1,0 +1,29 @@
+﻿@page "/"
+@inject IJSRuntime JSRuntime
+
+<h1>Hello, world!</h1>
+
+We're talking to SocketIO because FierceKittenz SAID SO.
+
+<span>Echo from JS: @Message</span>
+
+@code {
+
+    public static string Message { get; set; } = "";
+
+    protected override async Task OnInitializedAsync() {
+
+        await JSRuntime.InvokeVoidAsync("StartSocket", new object[] {});
+
+    }
+
+    [JSInvokable]
+    public static Task PrintEchoFromJs(string msg) {
+
+        Message = msg;
+
+        return Task.CompletedTask;
+
+    }
+
+}
